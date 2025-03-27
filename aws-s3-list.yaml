@@ -10,4 +10,4 @@ code: |
           print(bucket['Name'])
 
   if __name__ == "__main__":
-      list_buckets()
+      list_buckets()x
