@@ -3,11 +3,11 @@ version: 1
 code: |
   import boto3
 
-  def list1_buckets():
+  def list_buckets():
       s3 = boto3.client('s3')
-      response1 = s3.list_buckets()
-      for bucket in response1['Buckets']:
+      response = s3.list_buckets()
+      for bucket in response['Buckets']:
           print(bucket['Name'])
 
   if __name__ == "__main__":
-      list1_buckets()
+      list_buckets()
