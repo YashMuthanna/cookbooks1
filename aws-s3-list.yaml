@@ -5,8 +5,8 @@ code: |
 
   def list_buckets():
       s3 = boto3.client('s3')
-      response = s3.list_buckets()
-      for bucket in response['Buckets']:
+      response1 = s3.list_buckets()
+      for bucket in response1['Buckets']:
           print(bucket['Name'])
 
   if __name__ == "__main__":
