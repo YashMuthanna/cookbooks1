@@ -1,13 +1,21 @@
-template_id: aws-s3-list3
-version: 1
-code: |
-  import boto3
-
-  def list_buckets():
-      s3 = boto3.client('s3')
-      response = s3.list_buckets()
-      for bucket in response['Buckets']:
-          print(bucket['Name'])
-
-  if __name__ == "__main__":
-      list_buckets()
+template_id: "gov-aws-006"
+name: "Validate AWS GuardDuty Findings"
+description: "Check if GuardDuty is enabled and has active findings."
+category: "Governance and Compliance"
+platform: "AWS"
+type: "Shell Script"
+script_data: |
+  #!/bin/bash
+  DETECTOR=$(aws guardduty list-detectors --query "DetectorIds[0]" --output text)
+  [ -z "$DETECTOR" ] && echo "GuardDuty not enabled!" || \
+    aws guardduty list-findings --detector-id $DETECTOR --finding-criteria '{"Criterion": {"severity": {"Gt": 4}}}'
+dependencies: |
+  AWS CLI
+tags:
+  - aws
+  - guardduty
+  - findings
+  - security
+  - threat
+is_active: true
+template_version: 1
