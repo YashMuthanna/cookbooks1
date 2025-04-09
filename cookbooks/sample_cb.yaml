@@ -1,13 +1,27 @@
-template_id: aws-s3-list
-version: 1
-code: |
-  import boto3
-
-  def list_buckets():
-      s3 = boto3.client('s3')
-      response = s3.list_buckets()
-      for bucket in response['Buckets']:
-          print(bucket['Name'])
-
-  if __name__ == "__main__":
-      list_buckets()x
+name: "List Publicly Exposed S3 Buckets"
+description: "Identifies S3 buckets in AWS that are publicly accessible by inspecting their bucket policies using AWS CLI."
+category: "Cloud Security"
+platform: "AWS"
+type: "Shell Script"
+script_data: |
+  #!/bin/bash
+  # Dependency: AWS CLI configured with credentials
+  # List all buckets
+  BUCKETS=$(aws s3api list-buckets --query "Buckets[].Name" --output text)
+  for BUCKET in $BUCKETS; do
+    # Check if bucket policy allows public access
+    PUBLIC=$(aws s3api get-bucket-policy-status --bucket $BUCKET --query "PolicyStatus.IsPublic" 2>/dev/null || echo "false")
+    if [ "$PUBLIC" = "true" ]; then
+      echo "Public Bucket: $BUCKET"
+    fi
+  done
+dependencies: |
+  awscli>=2.0
+tags:
+  - aws
+  - s3
+  - security
+  - public
+  - buckets
+is_active: true
+template_version: 1
