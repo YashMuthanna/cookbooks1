@@ -1,3 +1,4 @@
+template_id: "aws-sample-001"
 name: "List Publicly Exposed S3 Buckets"
 description: "Identifies S3 buckets in AWS that are publicly accessible by inspecting their bucket policies using AWS CLI."
 category: "Cloud Security"
