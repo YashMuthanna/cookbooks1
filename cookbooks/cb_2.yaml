@@ -6,6 +6,7 @@ platform: "AWS"
 type: "Shell Script"
 script_data: |
   #!/bin/bash
+  123
   DETECTOR=$(aws guardduty list-detectors --query "DetectorIds[0]" --output text)
   [ -z "$DETECTOR" ] && echo "GuardDuty not enabled!" || \
     aws guardduty list-findings --detector-id $DETECTOR --finding-criteria '{"Criterion": {"severity": {"Gt": 4}}}'
