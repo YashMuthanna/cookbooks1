@@ -1,4 +1,4 @@
-template_id: "gov-aws-006"
+template_id: "gov-aws-007"
 name: "Validate AWS GuardDuty Findings"
 description: "Check if GuardDuty is enabled and has active findings."
 category: "Governance Compliance"
